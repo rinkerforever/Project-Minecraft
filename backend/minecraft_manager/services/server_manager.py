@@ -76,7 +76,13 @@ class ServerManager:
                 raise ValueError(
                     f"Server jar '{server_jar}' does not exist. Use Update Server Jar after correcting the profile."
                 )
-            command = [java_path, *profile.jvm_args, "-jar", profile.server_jar, *profile.server_args]
+            if server_jar.name == "run.sh":
+                # Modern Forge installers use run.sh to supply their generated classpath.
+                # Keep the profile memory settings in the file consumed by that launcher.
+                (working_dir / "user_jvm_args.txt").write_text("\n".join(profile.jvm_args) + "\n", encoding="utf-8")
+                command = ["bash", profile.server_jar, *profile.server_args]
+            else:
+                command = [java_path, *profile.jvm_args, "-jar", profile.server_jar, *profile.server_args]
 
             state.server_status = "starting"
             state.online_players = []
