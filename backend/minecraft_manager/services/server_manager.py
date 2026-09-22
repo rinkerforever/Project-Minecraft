@@ -19,7 +19,9 @@ class ServerManager:
     def __init__(self) -> None:
         self._process: subprocess.Popen[str] | None = None
         self._stdout_thread: threading.Thread | None = None
-        self._lock = threading.Lock()
+        # stop_server calls send_command while holding this lock. An RLock prevents
+        # that controlled re-entry from deadlocking health checks and new logins.
+        self._lock = threading.RLock()
 
     def get_state(self) -> ServerState:
         return load_state()
