@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blocksmith Server Console</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="/static/players.css" />
+  <link rel="stylesheet" href="/static/connection.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">Blocksmith <span>SERVER CONSOLE</span></div>
+      <nav class="nav" aria-label="Server sections">
+        <button class="nav-item active" data-view="console">&#62;_ <span>Console</span></button>
+        <button class="nav-item" data-view="files">[] <span>Files</span></button>
+        <button class="nav-item" data-view="mods">{} <span>Mods</span></button>
+        <button class="nav-item" data-view="backups">() <span>Backups</span></button>
+        <button class="nav-item" data-view="settings">* <span>Settings</span></button>
+      </nav>
+      <div class="sidebar-status"><i></i><span id="sidebar-status">Connect to server</span><small id="uptime">No active session</small></div>
+    </aside>
+    <section class="workspace">
+      <header class="topbar"><div><strong id="view-title">Console</strong><span id="profile-caption">No profile selected</span></div><div class="top-actions"><button id="refresh-button" class="quiet-button">Refresh</button><button id="signout-button" class="quiet-button">Sign out</button></div></header>
+      <section id="console-view" class="view active"><div class="command-row"><span>&gt;_</span><input id="command-input" placeholder="Enter server command..." autocomplete="off" /><button id="send-command">Send</button></div><pre id="console-log" class="console-log">Connect to load server output.</pre><div class="server-actions"><button class="start" data-action="start">Start</button><button data-action="restart">Restart</button><button class="stop" data-action="stop">Stop</button></div></section>
+      <section id="files-view" class="view panel-view"><div class="panel-heading"><div><p class="kicker">Active server directory</p><h1>Files</h1><p id="file-breadcrumb">/</p></div><label class="action-button">Upload file<input id="file-upload" type="file" hidden /></label></div><div class="file-actions"><button id="files-up" class="quiet-button">Up one folder</button></div><div id="file-list" class="data-list"></div></section>
+      <section id="mods-view" class="view panel-view"><div class="panel-heading"><div><p class="kicker">Active profile</p><h1>Mods</h1><p>Upload and inspect the mod JARs attached to this server.</p></div><label class="action-button">Upload mod<input id="mod-upload" type="file" accept=".jar" hidden /></label></div><div id="mod-list" class="data-list"></div></section>
+      <section id="backups-view" class="view panel-view"><div class="panel-heading"><div><p class="kicker">ZIP snapshots</p><h1>Backups</h1><p>Snapshots include the active server folder, excluding earlier backups.</p></div><button id="create-backup" class="action-button">Create backup</button></div><div id="backup-list" class="data-list"></div></section>
+      <section id="settings-view" class="view panel-view settings-grid"><div class="panel-heading"><div><p class="kicker">Profile configuration</p><h1>Settings</h1><p>Changes to the profile require the server to be stopped.</p></div></div><form id="profile-form" class="settings-form"><label>Profile<select id="settings-profile"></select></label><label>Server JAR<input id="settings-jar" required /></label><label>Working directory<input id="settings-directory" required /></label><label>Java runtime<select id="settings-runtime"></select></label><label>JVM arguments<input id="settings-jvm" /></label><label>Server arguments<input id="settings-server-args" /></label><label>Mod directory<input id="settings-mod-directory" required /></label><button class="action-button" type="submit">Save profile</button></form><section class="notes-card"><p class="kicker">Operator notes</p><textarea id="notes" placeholder="Notes for the next operator..."></textarea><button id="save-notes" class="quiet-button">Save notes</button></section></section>
+    </section>
+    <aside class="presence-panel"><section><div class="panel-title"><h2>Online Players</h2><span id="player-count">0 online</span></div><div id="player-list" class="players"><p class="empty">No player data yet.</p></div></section><section class="health"><div class="panel-title"><h2>Server Health</h2><span id="health-status">offline</span></div><div class="metric"><span>CPU usage</span><strong id="health-cpu">--</strong></div><div class="metric"><span>Memory</span><strong id="health-memory">--</strong></div><div class="metric"><span>Tick rate</span><strong id="health-tps">--</strong></div><p id="health-source" class="empty"></p><div class="metric"><span>Profile</span><strong id="health-profile">None</strong></div></section></aside>
+  </main>
+  <dialog id="login-dialog" class="login-dialog"><form id="login-form" method="dialog"><p class="kicker">Blocksmith</p><h1>Connect to your server.</h1><label>Server URL<input id="server-url" value="http://192.168.50.22:9090" required /></label><label>Username<input id="username" value="owner" required /></label><label>Password<input id="password" type="password" value="changeme" required /></label><p id="login-error" class="error" role="alert"></p><button id="connect-button" class="action-button" type="submit">Connect</button></form></dialog><div id="toast" class="toast" role="status"></div><script src="/static/app.js"></script>
+</body>
+</html>

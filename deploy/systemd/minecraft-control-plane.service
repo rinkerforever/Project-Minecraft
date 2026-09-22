@@ -1,0 +1,16 @@
+[Unit]
+Description=Minecraft Control Plane API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=scorpion
+WorkingDirectory=/home/scorpion/minecraft/backend
+EnvironmentFile=/home/scorpion/minecraft/backend/.env
+ExecStart=/home/scorpion/minecraft/backend/.venv/bin/python run_server.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

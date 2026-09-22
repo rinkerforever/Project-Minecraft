@@ -1,0 +1,8 @@
+[Unit]
+Description=Check GitHub for Minecraft Control Plane updates
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/scorpion/minecraft/deploy/update-from-github.sh

@@ -1,0 +1,12 @@
+{
+  "item.spawnerplacer.zombie_spawner": "Zombie Spawner",
+  "item.spawnerplacer.skeleton_spawner": "Skeleton Spawner",
+  "item.spawnerplacer.spider_spawner": "Spider Spawner",
+  "item.spawnerplacer.creeper_spawner": "Creeper Spawner",
+  "item.spawnerplacer.enderman_spawner": "Enderman Spawner",
+  "item.spawnerplacer.blaze_spawner": "Blaze Spawner",
+  "item.spawnerplacer.witch_spawner": "Witch Spawner",
+  "item.spawnerplacer.slime_spawner": "Slime Spawner",
+  "itemGroup.spawnerplacer.spawner_placer": "Spawner Placer",
+  "tooltip.spawnerplacer.places": "Places a %s spawner."
+}

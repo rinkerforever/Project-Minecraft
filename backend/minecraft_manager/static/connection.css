@@ -1,0 +1,15 @@
+.sidebar-status i,
+.sidebar-status.disconnected i {
+  background: var(--red);
+  box-shadow: 0 0 12px #ef625888;
+}
+
+.sidebar-status.connected i {
+  background: var(--green);
+  box-shadow: 0 0 12px #62c45488;
+}
+
+.action-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}

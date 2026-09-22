@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:iron_bars",
+    "C": "minecraft:diamond",
+    "O": "minecraft:obsidian"
+  },
+  "pattern": [
+    "BBB",
+    "BCB",
+    "OOO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "spawnerplacer:zombie_spawner"
+  }
+}

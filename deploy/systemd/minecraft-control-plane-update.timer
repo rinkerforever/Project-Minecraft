@@ -1,0 +1,10 @@
+[Unit]
+Description=Check GitHub for Minecraft Control Plane updates every five minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

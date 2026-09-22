@@ -1,0 +1,9 @@
+.venv/
+backend/.env
+__pycache__/
+*.pyc
+backend/data/
+build/
+dist/
+installer-output/
+*.spec
