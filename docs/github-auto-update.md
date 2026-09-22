@@ -18,6 +18,24 @@ sudo -u scorpion /home/scorpion/minecraft/backend/.venv/bin/python -m pip instal
 
 Create `/home/scorpion/minecraft/backend/.env` with the production secret and host settings. Do not commit this file.
 
+## Move an existing installation to GitHub
+
+First stop Minecraft from the dashboard and wait for its status to become stopped. Then run the following once. It preserves the ignored runtime data directory and the production `.env` before replacing only the application source with the GitHub checkout.
+
+```bash
+sudo systemctl stop minecraft-control-plane.service
+sudo mkdir -p /home/scorpion/minecraft-migration-backup
+sudo rsync -a /home/scorpion/minecraft/backend/data/ /home/scorpion/minecraft-migration-backup/data/
+sudo cp /home/scorpion/minecraft/backend/.env /home/scorpion/minecraft-migration-backup/.env
+sudo mv /home/scorpion/minecraft /home/scorpion/minecraft-before-github
+sudo -u scorpion git clone https://github.com/rinkerforever/Project-Minecraft.git /home/scorpion/minecraft
+sudo rsync -a /home/scorpion/minecraft-migration-backup/data/ /home/scorpion/minecraft/backend/data/
+sudo cp /home/scorpion/minecraft-migration-backup/.env /home/scorpion/minecraft/backend/.env
+sudo chown -R scorpion:scorpion /home/scorpion/minecraft
+sudo -u scorpion python3 -m venv /home/scorpion/minecraft/backend/.venv
+sudo -u scorpion /home/scorpion/minecraft/backend/.venv/bin/python -m pip install -r /home/scorpion/minecraft/backend/requirements.txt
+```
+
 ## Enable services
 
 ```bash
@@ -30,7 +48,16 @@ sudo systemctl enable --now minecraft-control-plane.service
 sudo systemctl enable --now minecraft-control-plane-update.timer
 ```
 
-After every push to `main`, the host checks GitHub within five minutes. It applies only fast-forward updates from a clean checkout, installs backend requirements, and restarts the API. Check the timer with:
+After every push to `main`, the host checks GitHub within five minutes. It applies only fast-forward updates from a clean checkout and installs backend requirements. It creates `/home/scorpion/minecraft/.restart-required` rather than restarting the API while Minecraft may be running.
+
+After stopping Minecraft from the dashboard, apply the pending update with:
+
+```bash
+sudo systemctl restart minecraft-control-plane.service
+sudo rm -f /home/scorpion/minecraft/.restart-required
+```
+
+Check the timer with:
 
 ```bash
 systemctl status minecraft-control-plane-update.timer

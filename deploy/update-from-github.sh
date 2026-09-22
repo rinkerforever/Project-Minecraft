@@ -5,6 +5,7 @@ APP_USER="scorpion"
 REPO_DIR="/home/scorpion/minecraft"
 BRANCH="main"
 SERVICE="minecraft-control-plane.service"
+RESTART_MARKER="$REPO_DIR/.restart-required"
 
 run_as_app_user() {
   runuser -u "$APP_USER" -- "$@"
@@ -25,5 +26,5 @@ fi
 
 run_as_app_user git -C "$REPO_DIR" merge --ff-only "origin/$BRANCH"
 run_as_app_user "$REPO_DIR/backend/.venv/bin/python" -m pip install --quiet -r "$REPO_DIR/backend/requirements.txt"
-systemctl restart "$SERVICE"
-echo "Updated Minecraft Control Plane to $remote_revision"
+touch "$RESTART_MARKER"
+echo "Updated Minecraft Control Plane to $remote_revision; restart $SERVICE after Minecraft is stopped."
